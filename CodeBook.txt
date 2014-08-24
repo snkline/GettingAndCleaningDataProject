@@ -1,0 +1,111 @@
+Study Design
+
+The source data is seperated into 3 areas.
+1: Overall Descriptive Data
+	feature_info.txt - This contains the description of the columns used in each feature vector.
+	features.txt - detailed listing of columns used in feature vector. This will for the source of column names in tidy dataset.
+	activity_labels.txt - Activities are coded numerically, this file provides mapping of numeric codes to descriptive names
+2: Training Data
+	subject_train.txt - This is a list (1-column) of subject identifiers. There is one row per feature vector.
+	y_train.txt - This is a list (1-column) of activity identifiers. There is one row per feature vector. This will be used to map
+	              the descriptive labels constained in activity_labels.txt
+	x_train - This contains the feature vectors. 561 columns, each column cooresponding to a row in features.txt.
+3: Test Data
+	The test data is the same as the training data, except there are fewer total feature vectors. It consists of:
+		subject_test.txt
+		y_test.txt
+		x_test.txt
+
+The following steps will be taken to tidy the data:
+	 1. Pull in features.txt as a string vector: this will form the basis of the names() for the features in the dataset.	
+	 2. Pull in the activity_labels as a data frame: this will be used for mapping activity codes.
+	 3. Pull in subject_train.txt as a string vector.
+	 4. Pull in y_train.txt as a string vector.
+	 5. Pull in X_train.txt as a data frame
+	 6. Assign features.txt vector to names() of X_train
+	 7. Prepend X_train vector with activity labels based on y_train vector. Give column the name "Activity".
+	 8. Prepend X_train vector with subject ids from the subject_train vector. Give the column the name "Subject_ID".
+	 9. Repeat steps 3-8 for test data.
+	10. Merge train and test data, excluding all *_train columns that are not means or std. deviations.
+	11. Use dataset from step 10 to generate a second dataset with the following pseudo-schema:
+		Subject_ID	|	Activity	|	Feature_1_Avg	|	Feature_2_Avg	|	Feature_3_Avg	|	Etc....
+		----------------------------------------------------------------------------------------------------
+		Where each Feature is either the mean or std. deviation measurements from dataset generated in step 10.
+		
+Code Book - Tidy Data Set
+	
+	Subject_ID					|	Unique Identifier of Subject				|	(Integer)
+	Activity					|	Description of Activity						|	WALKING
+								|												|	WALKING_UPSTAIRS
+								|												|	WALKING_DOWNSTAIRS
+								|												|	SITTING
+								|												|	STANDING
+								|												|	LAYING
+	tBodyAcc-mean()-X			|	Mean Body Acceleration - X					|	(Numeric)
+	tBodyAcc-mean()-Y           |	Mean Body Acceleration - Y                  |	(Numeric)
+	tBodyAcc-mean()-Z           |	Mean Body Acceleration - Z                  |	(Numeric)
+	tBodyAcc-std()-X            |	Std Dev Body Acceleration - X               |	(Numeric)
+	tBodyAcc-std()-Y            |	Std Dev Body Acceleration - Y               |	(Numeric)
+	tBodyAcc-std()-Z            |	Std Dev Body Acceleration - Z               |	(Numeric)
+	tGravityAcc-mean()-X        |	Mean Gravity Acceleration - X               |	(Numeric)
+	tGravityAcc-mean()-Y        |	Mean Gravity Acceleration - Y               |	(Numeric)
+	tGravityAcc-mean()-Z        |	Mean Gravity Acceleration - Z               |	(Numeric)
+	tGravityAcc-std()-X         |	Std Dev Gravity Acceleration - X            |	(Numeric)
+	tGravityAcc-std()-Y         |	Std Dev Gravity Acceleration - Y            |	(Numeric)
+	tGravityAcc-std()-Z         |	Std Dev Gravity Acceleration - Z            |	(Numeric)
+	tBodyAccJerk-mean()-X       |	Mean Body Jerk - X                          |	(Numeric)
+	tBodyAccJerk-mean()-Y       |	Mean Body Jerk - Y                          |	(Numeric)
+	tBodyAccJerk-mean()-Z       |	Mean Body Jerk - Z                          |	(Numeric)
+	tBodyAccJerk-std()-X        |	Std Dev Body Jerk - X                       |	(Numeric)
+	tBodyAccJerk-std()-Y        |	Std Dev Body Jerk - Y                       |	(Numeric)
+	tBodyAccJerk-std()-Z        |	Std Dev Body Jerk - Z                       |	(Numeric)
+	tBodyGyro-mean()-X          |	Mean Body Gyro - X                          |	(Numeric)
+	tBodyGyro-mean()-Y          |	Mean Body Gyro - Y                          |	(Numeric)
+	tBodyGyro-mean()-Z          |	Mean Body Gyro - Z                          |	(Numeric)
+	tBodyGyro-std()-X           |	Std Dev Body Gyro - X                       |	(Numeric)
+	tBodyGyro-std()-Y           |	Std Dev Body Gyro - Y                       |	(Numeric)
+	tBodyGyro-std()-Z           |	Std Dev Body Gyro - Z                       |	(Numeric)
+	tBodyGyroJerk-mean()-X      |	Mean Body Gyro Jerk - X                     |	(Numeric)
+	tBodyGyroJerk-mean()-Y      |	Mean Body Gyro Jerk - Y                     |	(Numeric)
+	tBodyGyroJerk-mean()-Z      |	Mean Body Gyro Jerk - Z                     |	(Numeric)
+	tBodyGyroJerk-std()-X       |	Std Dev Body Gyro Jerk - X                  |   (Numeric)
+	tBodyGyroJerk-std()-Y       |	Std Dev Body Gyro Jerk - Y                  |   (Numeric)
+	tBodyGyroJerk-std()-Z       |	Std Dev Body Gyro Jerk - Z                  |   (Numeric)
+	tBodyAccMag-mean()          |	Mean Body Acceleration Magnitude            |   (Numeric)
+	tBodyAccMag-std()           |	Std Dev Body Acceleration Magnitude         |	(Numeric)
+	tGravityAccMag-mean()       |	Mean Gravity Acceleration Magnitude         |   (Numeric)
+	tGravityAccMag-std()        |	Std Dev Gravity Acceleration Magnitude      |   (Numeric)
+	tBodyAccJerkMag-mean()      |	Mean Body Jerk Magnitude                    |   (Numeric)
+	tBodyAccJerkMag-std()       |	Std Dev Body Jerk Magnitude                 |   (Numeric)
+	tBodyGyroMag-mean()         |	Mean Body Gyro Magnitude                    |	(Numeric)
+	tBodyGyroMag-std()          |	Std Dev Body Gyro Magnitude                 |   (Numeric)
+	tBodyGyroJerkMag-mean()     |	Mean Body Gyro Jerk Magnitude               |   (Numeric)
+	tBodyGyroJerkMag-std()      |	Std Dev Body Gyro Jerk Magnitude            |   (Numeric)
+	fBodyAcc-mean()-X           |	Mean Body Acceleration - X                  |   (Numeric)
+	fBodyAcc-mean()-Y           |	Mean Body Acceleration - Y                  |   (Numeric)
+	fBodyAcc-mean()-Z           |	Mean Body Acceleration - Z                  |   (Numeric)
+	fBodyAcc-std()-X            |	Std Dev Body Acceleration - X               |   (Numeric)
+	fBodyAcc-std()-Y            |	Std Dev Body Acceleration - Y               |   (Numeric)
+	fBodyAcc-std()-Z            |	Std Dev Body Acceleration - Z               |   (Numeric)
+	fBodyAccJerk-mean()-X       |	Mean Body Jerk - X                          |   (Numeric)
+	fBodyAccJerk-mean()-Y       |	Mean Body Jerk - Y                          |   (Numeric)
+	fBodyAccJerk-mean()-Z       |	Mean Body Jerk - Z                          |   (Numeric)
+	fBodyAccJerk-std()-X        |	Std Dev Body Jerk - X                       |   (Numeric)
+	fBodyAccJerk-std()-Y        |	Std Dev Body Jerk - Y                       |	(Numeric)
+	fBodyAccJerk-std()-Z        |	Std Dev Body Jerk - Z                       |   (Numeric)
+	fBodyGyro-mean()-X          |	Mean Body Gryo - X                          |   (Numeric)
+	fBodyGyro-mean()-Y          |	Mean Body Gryo - Y                          |   (Numeric)
+	fBodyGyro-mean()-Z          |	Mean Body Gryo - Z                          |   (Numeric)
+	fBodyGyro-std()-X           |	Std Dev Body Gryo - X                       |   (Numeric)
+	fBodyGyro-std()-Y           |	Std Dev Body Gryo - Y                       |   (Numeric)
+	fBodyGyro-std()-Z           |	Std Dev Body Gryo - Z                       |   (Numeric)
+	fBodyAccMag-mean()          |	Mean Body Acceleration Magnitude            |   (Numeric)
+	fBodyAccMag-std()           |	Std Dev Body Acceleration Magnitude         |   (Numeric)
+	fBodyBodyAccJerkMag-mean()  |	Mean Body Jerk Magnitude                    |   (Numeric)
+	fBodyBodyAccJerkMag-std()   |	Std Dev Body Jerk Magnitude                 |   (Numeric)
+	fBodyBodyGyroMag-mean()     |	Mean Body Gyro Magnitude                    |   (Numeric)
+	fBodyBodyGyroMag-std()      |	Std Dev Body Gyro Magnitude                 |   (Numeric)
+	fBodyBodyGyroJerkMag-mean() |	Mean Body Gyro Jerk Magnitude               |	(Numeric)
+	fBodyBodyGyroJerkMag-std()  |	Std Dev Body Gyro Jerk Magnitude            |	(Numeric)
+
+	
